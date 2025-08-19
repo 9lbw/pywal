@@ -1,4 +1,4 @@
-"""Test imagemagick functions."""
+"""Test magick functions."""
 import unittest
 
 from pywal import colors

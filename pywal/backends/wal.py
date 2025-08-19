@@ -1,5 +1,5 @@
 """
-Generate a colorscheme using imagemagick.
+Generate a colorscheme using magick.
 """
 import logging
 import re
@@ -10,45 +10,42 @@ import sys
 from .. import util
 
 
-def imagemagick(color_count, img, magick_command):
-    """Call Imagemagick to generate a scheme."""
+def magick(color_count, img):
+    """Call magick to generate a scheme."""
     flags = ["-resize", "25%", "-colors", str(color_count),
              "-unique-colors", "txt:-"]
     img += "[0]"
 
-    return subprocess.check_output([*magick_command, img, *flags]).splitlines()
+    return subprocess.check_output(["magick", img, *flags]).splitlines()
 
 
 def has_im():
     """Check to see if the user has im installed."""
     if shutil.which("magick"):
-        return ["magick", "convert"]
+        return ["magick"]
 
-    if shutil.which("convert"):
-        return ["convert"]
-
-    logging.error("Imagemagick wasn't found on your system.")
+    logging.error("magick wasn't found on your system.")
     logging.error("Try another backend. (wal --backend)")
     sys.exit(1)
 
 
 def gen_colors(img):
-    """Format the output from imagemagick into a list
+    """Format the output from magick into a list
        of hex colors."""
-    magick_command = has_im()
+    has_im()
 
     for i in range(0, 20, 1):
-        raw_colors = imagemagick(16 + i, img, magick_command)
+        raw_colors = magick(16 + i, img)
 
         if len(raw_colors) > 16:
             break
 
         if i == 19:
-            logging.error("Imagemagick couldn't generate a suitable palette.")
+            logging.error("magick couldn't generate a suitable palette.")
             sys.exit(1)
 
         else:
-            logging.warning("Imagemagick couldn't generate a palette.")
+            logging.warning("magick couldn't generate a palette.")
             logging.warning("Trying a larger palette size %s", 16 + i)
 
     return [re.search("#.{6}", str(col)).group(0) for col in raw_colors[1:]]

@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `vim` output file.
 - Fixed `LS_COLORS` issue.
 - Fixed issues in iTerm2 on macOS.
-- Fixed hang caused by `imagemagick`.
+- Fixed hang caused by `magick`.
 - Fixed issue with `-i` and transparency.
 
 
@@ -194,7 +194,7 @@ reload: Fixed permissions error.
 
 - Added support for changing colors in linux `ttys`.
 - Fixed bug with transparency in urxvt.
-- Added `imagemagick display` as a wallpaper setter fallback.
+- Added `magick display` as a wallpaper setter fallback.
 
 **api**
 
